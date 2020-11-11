@@ -1,15 +1,59 @@
+# Django #
+*.log
+*.pot
 *.pyc
-.idea
-.vscode
-*/*.pyc
-*/*/*.pyc
-*/migrations/*
-./src/static/*
-/__pycache__
-src/project/__pycache__/settings.cpython-35.pyc
-*/static/
-.DS_Store
-.env
-**/.DS_Store
-src/project/local_settings.py
-src/media
+__pycache__
+db.sqlite3
+media/
+static/
+
+# Backup files # 
+*.bak 
+
+# If you are using PyCharm # 
+.idea/**/workspace.xml 
+.idea/**/tasks.xml 
+.idea/dictionaries 
+.idea/**/dataSources/ 
+.idea/**/dataSources.ids 
+.idea/**/dataSources.xml 
+.idea/**/dataSources.local.xml 
+.idea/**/sqlDataSources.xml 
+.idea/**/dynamic.xml 
+.idea/**/uiDesigner.xml 
+.idea/**/gradle.xml 
+.idea/**/libraries 
+*.iws /out/ 
+
+# Installer logs 
+pip-log.txt 
+pip-delete-this-directory.txt 
+
+# Unit test / coverage reports 
+.coverage 
+.coverage.* 
+.cache 
+.pytest_cache/ 
+coverage.xml 
+
+# pyenv 
+.python-version 
+
+# celery 
+celerybeat-schedule.* 
+
+# Environments 
+.envs/*
+!.envs/*.example
+
+# mkdocs documentation 
+/site  
+
+# Visual Studio Code # 
+.vscode/* 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history
+
+*.DS_Store

@@ -1,15 +1,11 @@
-<head>
-    <title>My Django Project</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
+{% extends 'base.html' %}
+{% block body %}
     <center>
         <div class="jumbotron">
             <h2>Hello World!!</h2>
         </div>
         <p>This Project is developed using
-            <b>Django 2.2.8</b>.
+            <b>{{ version }}</b>.
         </p>
         <p>This page is being served through Gunicorn. You can access the
             <a href='/admin'>admin site</a> as well.</p>
@@ -32,10 +28,5 @@
         {% endfor %}
         {% endif %}
         </div>
-
     </center>
-</body>
-
-<footer>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</footer>
+{% endblock %}

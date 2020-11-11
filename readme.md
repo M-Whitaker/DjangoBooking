@@ -1,16 +1,18 @@
-# Deploy Django using Nginx, Celery, Redis and Postgresql with Docker
+# Django-Booking System
 
 ## Basic Usage
-1. First run **`make build`** inside root directory.
-2. Then run **`make up`** to start up the project for first time.
-3. Use/update environment variables from [**`.envs`**](https://github.com/ruddra/docker-django/blob/master/.envs) folder.
+
+1. Then run **`make up`** to start up the project for first time.
+2. Use/update environment variables from envs folder.
 
 Checkout the [commands](#commands) section for more usage.
 
 ## Preview
+
 A default Django project resides in `src` directory. So, when you start the project, you will see the following screen in `80` port:
 
 ## Commands
+
 To use this project, run this commands:
 
 1. `make up` to build the project and starting containers.

@@ -1,8 +1,9 @@
 # More Datascience frendly gist can be found here: https://gist.github.com/ruddra/870d7a51238ddfa4b50375086c12a4f5
 # pull official python alpine image
-FROM python:3.6-alpine
+FROM python:3.8.3-alpine
 
-# Set Environment Variable
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV C_FORCE_ROOT true
 
@@ -17,10 +18,9 @@ WORKDIR /src
 RUN apk update && apk add --no-cache \
     postgresql \
     zlib \
-    jpeg 
-# un-comment the following two dependecies if you want to add library like pandas, scipy and numpy
-# openblas \ 
-# libstdc++ 
+    jpeg \
+    openblas \ 
+    libstdc++
 
 # Installing temporary packages required for installing requirements.pip 
 RUN apk add --no-cache --virtual build-deps \
@@ -29,7 +29,10 @@ RUN apk add --no-cache --virtual build-deps \
     musl-dev \
     postgresql-dev\
     zlib-dev \
-    jpeg-dev 
+    jpeg-dev \
+    libressl-dev \
+    musl-dev \
+    libffi-dev
 # un-comment if you want to install numpy, pandas, scipy etc and their supported dependencies
 # g++ \
 # openblas-dev \
@@ -39,20 +42,23 @@ RUN apk add --no-cache --virtual build-deps \
 # Update pip
 RUN pip install --upgrade pip
 
-# **if you want to install scipy uncomment the following file**
-# RUN pip3 install --no-cache-dir --disable-pip-version-check scipy==1.3.1
-
 # Installing requirements.pip from project
 COPY ./src/requirements.pip /scripts/
 RUN pip install --no-cache-dir -r /scripts/requirements.pip
 
-# *install psycopg2 if you don't have it requirements.pip*
-# RUN pip install --no-cache-dir psycopg2
+# copy entrypoint.sh
+COPY ./compose/postgres/entrypoint.sh /scripts/
 
 # removing temporary packages from docker and removing cache 
-RUN apk del build-deps && \
+RUN apk del build-deps \
+    libressl-dev \
+    musl-dev \
+    libffi-dev && \
     find -type d -name __pycache__ -prune -exec rm -rf {} \; && \
     rm -rf ~/.cache/pip
 
+# run entrypoint.sh
+ENTRYPOINT ["/scripts/entrypoint.sh"]
+
 # CMD will run when this dockerfile is running
-CMD ["sh", "-c", "python manage.py collectstatic --no-input; python manage.py migrate; gunicorn project.wsgi -b 0.0.0.0:8000 & celery worker --app=myapp.tasks"]
+CMD ["sh", "-c", "python manage.py collectstatic --no-input; hypercorn project.asgi:application -b 0.0.0.0:8000 & celery worker --app=base.tasks"]
