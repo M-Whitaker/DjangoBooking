@@ -7,7 +7,7 @@ import django
 
 
 class ShowHelloWorld(TemplateView):
-    template_name = "hello_world.html"
+    template_name = "home.html"
 
     def get(self, *args, **kwargs):
         show_hello_world.apply()

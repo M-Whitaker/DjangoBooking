@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "dist/booking/styles/booking.css" %}">
+{% endblock head %}
+
+{% block body %}
+        <div class="container">
+            <a name="" id="" class="btn btn-primary" href="#" role="button">Testing bootstrap</a>
+            <p> Hello World </p>
+        </div>
+        <div id="app">
+            <!-- React will load here -->
+        </div>
+        <script src="{% static "dist/booking/js/booking.bundle.js" %}"></script>
+{% endblock %}
+{% block footer %}
+{% endblock footer %}

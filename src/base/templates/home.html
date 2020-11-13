@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block body %}
     <center>
         <div class="jumbotron">
@@ -29,4 +30,5 @@
         {% endif %}
         </div>
     </center>
+    <script src="{% static "dist/js/base.bundle.js" %}"></script>
 {% endblock %}

@@ -7,9 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>{{ title }}</title>
-
+    <link rel="stylesheet" href="{% static "dist/styles/base.css" %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     {% block head %} 
     {% endblock %}
@@ -19,8 +18,7 @@
     {% endblock %}
 </body>
 <footer>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    {% block footer %} 
+    {% block footer %}
     {% endblock %}
 </footer>
 </html>
