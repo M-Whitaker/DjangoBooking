@@ -3,6 +3,7 @@ version: "3"
 volumes:
   local_postgres_data: {}
   local_postgres_data_backups: {}
+  static_files: {}
 
 services:
   nginx:
@@ -12,6 +13,7 @@ services:
       - "80:8000"
     volumes:
       - ./src:/src
+      - static_files:/var/www/
       - ./config/nginx:/etc/nginx/conf.d
     depends_on:
       - web
@@ -26,6 +28,7 @@ services:
       - db
     volumes:
       - ./src:/src
+      - static_files:/var/www/
     expose:
       - "8000"
     links:

@@ -9,7 +9,9 @@ ENV C_FORCE_ROOT true
 
 # Making source and static directory
 RUN mkdir /src
-RUN mkdir /static
+RUN mkdir /var/www
+RUN mkdir /var/www/static
+RUN mkdir /var/www/media
 
 # Creating Work Directory
 WORKDIR /src

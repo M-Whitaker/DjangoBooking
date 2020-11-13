@@ -8,7 +8,7 @@ up-non-daemon: build
 	docker-compose up
 
 down:
-	docker-compose down
+	docker-compose down --volumes
 
 start:
 	docker-compose start
@@ -37,8 +37,12 @@ log-web:
 log-db:
 	docker-compose logs --follow db
 
-collectstatic:
-	docker exec django /bin/sh -c "python manage.py collectstatic --noinput"
+build_webpack:
+	npm --prefix src/base/static run build
+	npm --prefix src/booking/static run build
+
+collectstatic: build_webpack
+	docker exec django /bin/sh -c "python manage.py collectstatic --noinput --clear"
 
 runtests:
 	make build
