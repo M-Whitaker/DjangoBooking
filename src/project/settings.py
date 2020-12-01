@@ -9,7 +9,7 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "NO").lower() in ("on", "true", "y", "yes")
 
-ALLOWED_HOSTS = ["web"]
+ALLOWED_HOSTS = ["127.0.0.1", "web"]
 
 
 # Application definition
@@ -94,7 +94,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en-gb"
 
 TIME_ZONE = "UTC"
 
@@ -106,13 +106,13 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder'
-]
+# STATICFILES_FINDERS = [
+#     'django.contrib.staticfiles.finders.FileSystemFinder'
+# ]
 
 STATICFILES_DIRS = [
-    ("base", BASE_DIR + "/base/static/dist"),
-    ("booking", BASE_DIR + "/booking/static/dist"),
+    ("base", BASE_DIR + "/base/_static/dist"),
+    ("booking", BASE_DIR + "/booking/_static/dist"),
 ]
 
 STATIC_URL = "/static/"

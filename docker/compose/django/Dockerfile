@@ -48,8 +48,9 @@ RUN pip install --upgrade pip
 COPY ./src/requirements.pip /scripts/
 RUN pip install --no-cache-dir -r /scripts/requirements.pip
 
-# copy entrypoint.sh
-COPY ./compose/postgres/entrypoint.sh /scripts/
+# copy entrypoint.sh & runserver.sh
+COPY ./docker/compose/postgres/entrypoint.sh /scripts/
+COPY ./docker/compose/django/runserver.sh /scripts/
 
 # removing temporary packages from docker and removing cache 
 RUN apk del build-deps \
@@ -63,4 +64,4 @@ RUN apk del build-deps \
 ENTRYPOINT ["/scripts/entrypoint.sh"]
 
 # CMD will run when this dockerfile is running
-CMD ["sh", "-c", "python manage.py collectstatic --no-input; hypercorn project.asgi:application -b 0.0.0.0:8000 & celery worker --app=base.tasks"]
+CMD ["/scripts/runserver.sh"]

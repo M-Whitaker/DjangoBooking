@@ -40,6 +40,9 @@ pip-delete-this-directory.txt
 .pytest_cache/ 
 coverage.xml 
 
+# Docker
+jinja-compose.yml
+
 # pyenv 
 .python-version 
 

@@ -1,23 +1,22 @@
+compose := ./tools/jinja-compose.py --template docker-compose.yml.jinja
+
 build: down
-	docker-compose build
+	PRODUCTION="false" $(compose) build
 
-up: build
-	docker-compose up -d
-
-up-non-daemon: build
-	docker-compose up
+dev: build
+	PRODUCTION="false" $(compose) up -d
 
 down:
-	docker-compose down --volumes
+	PRODUCTION="false" $(compose) down --volumes
 
-start:
-	docker-compose start
+prod_build: prod_down
+	PRODUCTION="true" $(compose) build
 
-stop:
-	docker-compose stop
+prod: prod_build
+	PRODUCTION="true" $(compose) up -d
 
-restart:
-	docker-compose stop && docker-compose start
+prod_down:
+	PRODUCTION="true" $(compose) down --volumes
 
 shell-nginx:
 	docker exec -ti nginx /bin/sh
@@ -29,13 +28,13 @@ shell-db:
 	docker exec -ti postgres /bin/sh -c "psql --username=django_admin --dbname=django_db"
 
 log-nginx:
-	docker-compose logs --follow nginx
+	$(compose) logs --follow nginx
 
 log-web:
-	docker-compose logs --follow web
+	$(compose) logs --follow web
 
 log-db:
-	docker-compose logs --follow db
+	$(compose) logs --follow db
 
 build_webpack:
 	npm --prefix src/base/static run build

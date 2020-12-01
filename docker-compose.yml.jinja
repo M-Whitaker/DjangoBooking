@@ -6,6 +6,7 @@ volumes:
   static_files: {}
 
 services:
+  {% if ENV['PRODUCTION'] == 'true' %}
   nginx:
     image: nginx:alpine
     container_name: nginx
@@ -14,23 +15,24 @@ services:
     volumes:
       - ./src:/src
       - static_files:/var/www/
-      - ./config/nginx:/etc/nginx/conf.d
+      - ./docker/nginx:/etc/nginx/conf.d
     depends_on:
       - web
     networks:
       - djangonetwork
+  {% endif %}
   web:
     build:
       context: .
-      dockerfile: compose/django/Dockerfile
+      dockerfile: docker/compose/django/Dockerfile
     container_name: django
     depends_on:
       - db
     volumes:
       - ./src:/src
       - static_files:/var/www/
-    expose:
-      - "8000"
+    ports:
+      - "8000:8000"
     links:
       - redis
     env_file:
@@ -38,12 +40,13 @@ services:
       - ./.envs/.postgres
     environment:
       DEBUG: 'true'
+      PRODUCTION: $PRODUCTION
     networks:
       - djangonetwork
   db:
     build:
       context: .
-      dockerfile: compose/postgres/Dockerfile
+      dockerfile: docker/compose/postgres/Dockerfile
     container_name: postgres
     env_file:
       - ./.envs/.postgres
