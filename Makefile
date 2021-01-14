@@ -1,4 +1,5 @@
-compose := ./tools/jinja-compose.py --template docker-compose.yml.jinja
+compose := /usr/bin/python3 tools/jinja-compose.py --template docker-compose.yml.jinja
+compose_file := docker-compose -f jinja-compose.yml
 
 build: down
 	PRODUCTION="false" $(compose) build
@@ -36,9 +37,14 @@ log-web:
 log-db:
 	$(compose) logs --follow db
 
+
+npm_install:
+	npm --prefix src/base/_static install
+	npm --prefix src/booking/_static install
+
 build_webpack:
-	npm --prefix src/base/static run build
-	npm --prefix src/booking/static run build
+	npm --prefix src/base/_static run build
+	npm --prefix src/booking/_static run build
 
 collectstatic: build_webpack
 	docker exec django /bin/sh -c "python manage.py collectstatic --noinput --clear"

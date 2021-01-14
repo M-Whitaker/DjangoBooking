@@ -1,5 +1,6 @@
 SECRET_KEY=
-STATIC_FILE_ROOT=
+STATIC_FILE_ROOT=/var/www/static/
+MEDIA_FILE_ROOT=/var/www/media/
 DB_HOST=
 DB_PORT=
-DATABASE=
+DATABASE=postgres

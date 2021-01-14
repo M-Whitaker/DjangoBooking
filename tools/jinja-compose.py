@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-import argparse
-import yaml
 import os
 import sys
+import subprocess
+import argparse
+
+import yaml
 from jinja2 import Template
 
 # support Python 2 or 3
@@ -80,10 +82,16 @@ def main():
     yaml.safe_dump(config, args.output, default_flow_style=False)
 
     if not args.generate:
-        from compose.cli.main import main as compose_main
+        if sys.platform == "linux":
+            try:
+                from compose.cli.main import main as compose_main
+            except ImportError:
+                raise ImportError("Can't find docker compose.")
 
-        sys.argv[:] = ["docker-compose", "-f", args.output.name] + extras
-        compose_main()
+            sys.argv[:] = ["docker-compose", "-f", args.output.name] + extras
+            compose_main()
+        elif sys.platform == "darwin":
+            process = subprocess.run(["docker-compose", "-f", args.output.name] + extras)
 
 
 if __name__ == "__main__":
